@@ -81,7 +81,7 @@ class AbsenceSerializer(serializers.ModelSerializer):
     registro = RegistroSerializer(read_only=True)
     student = StudentSerializer(read_only=True)
     class Meta:
-        model = models.Absence
+        model = models.Relation
         fields = ( 'id',
             'origin',
             'justified',

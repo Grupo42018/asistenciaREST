@@ -85,7 +85,7 @@ class Absence(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = seria.AbsenceSerializer
 
     def get_queryset(self):
-        queryset = contmod.Absence.objects.all()
+        queryset = contmod.Relation.objects.all()
         params = self.request.query_params
         filt = {}
         for i in params.keys():
@@ -99,7 +99,7 @@ class getAbsences(generics.ListCreateAPIView):
     serializer_class = seria.AbsenceSerializer
 
     def get_queryset(self):
-        queryset = contmod.Absences.objects.all()
+        queryset = contmod.Relation.objects.all()
         params = self.request.query_params
         filt = {}
         for i in params.keys():
