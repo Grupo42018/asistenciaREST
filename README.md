@@ -12,7 +12,23 @@ Esta aplicacion para django es una end-point para que la aplicacion de f2 se con
 git clone https://github.com/Grupo42018/asistenciaREST.git
 ```
 
-2. Copiar lo siguiente en settings.py:
+2. Instalar requerimientos:
+
+```bash
+pip install django-rest-framework django-filter
+```
+
+3. Agregar las siguientes aplicaciones a INSTALLED_APPS:
+
+```python
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'REST',
+]
+```
+
+4. Copiar lo siguiente en settings.py:
 
 ```python
 REST_FRAMEWORK = {
@@ -27,7 +43,7 @@ REST_FRAMEWORK = {
 }
 ```
 
-3. Agregar lo siguiente en urls.py:
+5. Agregar lo siguiente en urls.py:
 
 ```python
 ...
