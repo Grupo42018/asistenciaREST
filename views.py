@@ -30,12 +30,10 @@ class getParents(generics.ListAPIView):
         queryset = contmod.Parent.objects.all()
         params = self.request.query_params
         filt={}
-        print(params)
         for i in params.keys():
             a = _check_field(queryset.model, i)
             if a:
                 filt[a] = params[i]
-        print filt
         queryset = queryset.filter(**filt)
         return queryset
 
