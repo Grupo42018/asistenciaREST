@@ -15,13 +15,8 @@ class getStudents(generics.ListAPIView):
     def get_queryset(self):
         queryset = contmod.Student.objects.all()
         params = self.request.query_params
-        filt = {}
-        for i in params.keys():
-            a = _check_field(queryset.model, i)
-            if a:
-                filt[a] = params[i]
-        queryset = queryset.filter(**filt)
-        return queryset
+        return _gen_queryset(queryset, params).order_by("last_name", "first_name")
+
 
 class getParents(generics.ListAPIView):
     serializer_class = seria.ParentSerializer
@@ -29,13 +24,8 @@ class getParents(generics.ListAPIView):
     def get_queryset(self):
         queryset = contmod.Parent.objects.all()
         params = self.request.query_params
-        filt={}
-        for i in params.keys():
-            a = _check_field(queryset.model, i)
-            if a:
-                filt[a] = params[i]
-        queryset = queryset.filter(**filt)
-        return queryset
+        return _gen_queryset(queryset, params)
+
 
 class getPreceptors(generics.ListAPIView):
     serializer_class = seria.PreceptorSerializer
@@ -43,13 +33,8 @@ class getPreceptors(generics.ListAPIView):
     def get_queryset(self):
         queryset = contmod.Preceptor.objects.all()
         params = self.request.query_params
-        filt = {}
-        for i in params.keys():
-            a = _check_field(queryset.model, i)
-            if a:
-                filt[a] = params[i]
-        queryset = queryset.filter(**filt)
-        return queryset
+        return _gen_queryset(queryset, params)
+
         
 class getYears(generics.ListAPIView):
     serializer_class = seria.YearSerializer
@@ -57,13 +42,8 @@ class getYears(generics.ListAPIView):
     def get_queryset(self):
         queryset = contmod.Year.objects.all()
         params = self.request.query_params
-        filt = {}
-        for i in params.keys():
-            a = _check_field(queryset.model, i)
-            if a:
-                filt[a] = params[i]
-        queryset = queryset.filter(**filt)
-        return queryset
+        return _gen_queryset(queryset, params)
+
         
 class getRegistros(generics.ListAPIView):
     serializer_class = seria.RegistroSerializer
@@ -71,13 +51,8 @@ class getRegistros(generics.ListAPIView):
     def get_queryset(self):
         queryset = contmod.Registro.objects.all()
         params = self.request.query_params
-        filt = {}
-        for i in params.keys():
-            a = _check_field(queryset.model, i)
-            if a:
-                filt[a] = params[i]
-        queryset = queryset.filter(**filt)
-        return queryset
+        return _gen_queryset(queryset, params)
+
         
 class Absence(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = seria.AbsenceSerializer
@@ -85,13 +60,7 @@ class Absence(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         queryset = contmod.Relation.objects.all()
         params = self.request.query_params
-        filt = {}
-        for i in params.keys():
-            a = _check_field(queryset.model, i)
-            if a:
-                filt[a] = params[i]
-        queryset = queryset.filter(**filt)
-        return queryset
+        return _gen_queryset(queryset, params)
         
 class getAbsences(generics.ListCreateAPIView):
     serializer_class = seria.AbsenceSerializer
@@ -99,13 +68,8 @@ class getAbsences(generics.ListCreateAPIView):
     def get_queryset(self):
         queryset = contmod.Relation.objects.all()
         params = self.request.query_params
-        filt = {}
-        for i in params.keys():
-            a = _check_field(queryset.model, i)
-            if a:
-                filt[a] = params[i]
-        queryset = queryset.filter(**filt)
-        return queryset
+        return _gen_queryset(queryset, params)
+
         
 def check(request):
     res = HttpResponse()
@@ -114,6 +78,14 @@ def check(request):
         res.status_code = 400
     return res
 
+def _gen_queryset(queryset, params):
+    filt = {}
+    for i in params.keys():
+        a = _check_field(queryset.model, i)
+        if a:
+            filt[a] = params[i]
+    queryset = queryset.filter(**filt)
+    return queryset
 
 def _check_field(model, filters):
     last = model.objects.first()

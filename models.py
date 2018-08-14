@@ -13,7 +13,8 @@ class YearSerializer(serializers.ModelSerializer):
         model = models.Year
         fields = ('id', 
             'year_number', 
-            'division')
+            'division',
+            )
 
 class PreceptorSerializer(serializers.ModelSerializer):
     first_name = serializers.ReadOnlyField(source='user.first_name')
